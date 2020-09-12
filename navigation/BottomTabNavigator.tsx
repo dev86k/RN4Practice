@@ -23,24 +23,24 @@ export default function BottomTabNavigator() {
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="YouTube"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="youtube" size={24} color="red" />,
         }}
       />
       <BottomTab.Screen
-        name="Home"
+        name="おうち"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color="black" />
+          tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color="black" />,
         }}
       />
       <BottomTab.Screen
-        name="TabThree"
+        name="会員証"
         component={TabThreeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="idcard" size={24} color="purple" />,
         }}
       />
     </BottomTab.Navigator>
