@@ -94,18 +94,19 @@ function TabThreeNavigator({ navigation }) {
         component={TabThreeScreen}
               options={{
                 headerTitle: props => <LogoTitle {...props} />,
-                headerRight: () => (
-                  <Button
-                    onPress={() => navigation.navigate('TabOneScreen')}
-                    title="One"
-                    color="#000000"
-                  />
-                ),
+                headerRight: (props) => (
+                     <AntDesign name="bars" size={26} color="black" style={{ marginRight: 3 }}
+                       {...props}
+                       onPress={() => {
+                         navigation.goBack()
+                       }}
+                     />
+                   ),
                 headerLeft: (props) => (
                      <HeaderBackButton
                        {...props}
                        onPress={() => {
-                         navigation.navigate('TabOneScreen')
+                         navigation.goBack()
                        }}
                      />
                    ),
@@ -119,8 +120,8 @@ function TabThreeNavigator({ navigation }) {
 function LogoTitle() {
   return (
     <Image
-      style={{ width: 50, height: 50 }}
-      source={require('../assets/logo.png')}
+      style={{ width: 48, height: 48 }}
+      source={require('../assets/images/favicon.png')}
     />
   );
 }
