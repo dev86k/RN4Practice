@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator,HeaderBackButton } from '@react-navigation/stack';
 import { AntDesign } from '@expo/vector-icons';
+import { View, Text, StyleSheet,Button,Image } from 'react-native';
 import * as React from 'react';
 
 import Colors from '../constants/Colors';
@@ -85,14 +86,41 @@ function TabTwoNavigator() {
 
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
-function TabThreeNavigator() {
+function TabThreeNavigator({ navigation }) {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
         name="TabThreeScreen"
         component={TabThreeScreen}
-        options={{ headerTitle: 'Tab Three Title' }}
+              options={{
+                headerTitle: props => <LogoTitle {...props} />,
+                headerRight: () => (
+                  <Button
+                    onPress={() => navigation.navigate('TabOneScreen')}
+                    title="One"
+                    color="#000000"
+                  />
+                ),
+                headerLeft: (props) => (
+                     <HeaderBackButton
+                       {...props}
+                       onPress={() => {
+                         navigation.navigate('TabOneScreen')
+                       }}
+                     />
+                   ),
+              }}
       />
     </TabThreeStack.Navigator>
+  );
+}
+
+
+function LogoTitle() {
+  return (
+    <Image
+      style={{ width: 50, height: 50 }}
+      source={require('../assets/logo.png')}
+    />
   );
 }
