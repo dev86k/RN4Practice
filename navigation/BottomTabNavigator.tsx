@@ -24,10 +24,10 @@ export default function BottomTabNavigator() {
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="YouTube"
+        name="news"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <AntDesign name="youtube" size={24} color="red" />,
+          tabBarIcon: ({ color }) => <AntDesign name="book" size={24} color="black" />,
         }}
       />
       <BottomTab.Screen
@@ -95,7 +95,7 @@ function TabThreeNavigator({ navigation }) {
               options={{
                 headerTitle: props => <LogoTitle {...props} />,
                 headerRight: (props) => (
-                     <AntDesign name="bars" size={26} color="black" style={{ marginRight: 3 }}
+                     <AntDesign name="bars" size={26} color="black" style={{ marginRight: 10 }}
                        {...props}
                        onPress={() => {
                          navigation.goBack()
@@ -120,7 +120,7 @@ function TabThreeNavigator({ navigation }) {
 function LogoTitle() {
   return (
     <Image
-      style={{ width: 48, height: 48 }}
+      style={{ width: 40, height: 40 }}
       source={require('../assets/images/favicon.png')}
     />
   );
