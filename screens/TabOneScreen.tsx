@@ -13,14 +13,14 @@ export default function TabOneScreen() {
   return (
           <View style={styles.container}>
             <FlatList
-            data={this.state.list}
+            data={state.list}
             keyExtractor={(item, index) => index.toString()}
             numColumns={2}
 
             renderItem={({item}) => (
               <View>
                <Image
-                source={{ uri: 'https://source.unsplash.com/random' }}
+                source={{ uri: 'https://source.unsplash.com/random?'+item }}
                 style={styles.imageStyle}
                 />
                 <Text style={styles.textStyle}>test</Text>
