@@ -60,7 +60,7 @@ function MyStack() {
   );
 }
 
-export default function App(TabTwoScreen) {
+export default function TabTwoScreen() {
   return (
       <MyStack />
   );
