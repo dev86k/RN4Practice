@@ -20,8 +20,8 @@ function DetailsScreen({route, navigation}) {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Details Screen</Text>
       <Button
-        title="Go to Home"
-        onPress={() => navigation.navigate('Home')}
+        title="Go to moDal"
+        onPress={() => navigation.navigate('MyModal')}
       />
     </View>
   );
@@ -38,34 +38,25 @@ function ModalScreen({ navigation }) {
 }
 
 
-const Stack = createStackNavigator();
+const MainStack = createStackNavigator();
+const RootStack = createStackNavigator();
+
+function MainStackScreen() {
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen name="Home" component={HomeScreen} />
+      <MainStack.Screen name="Details" component={DetailsScreen} />
+    </MainStack.Navigator>
+  );
+}
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}
-        options={{
-          title: 'My home',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-
-          headerRight: () => (
-            <Button
-              onPress={() => alert('This is a button!')}
-              title="Info"
-              color="#fff"
-            />
-          ),
-        }} />
-          <Stack.Screen name="Details" component={DetailsScreen} />
-          <Stack.Screen name="MyModal" component={ModalScreen} />
-      </Stack.Navigator>
+      <RootStack.Navigator mode="modal" headerMode="none">
+        <RootStack.Screen name="Main" component={MainStackScreen} />
+        <RootStack.Screen name="MyModal" component={ModalScreen} />
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }
