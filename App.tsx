@@ -1,80 +1,98 @@
-import * as React from 'react';
-import { View, Text, Button } from 'react-native';
-import { NavigationContainer, DrawerActions } from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from '@react-navigation/drawer';
-
-function Feed({ navigation }) {
+import React from 'react';
+import { Button, View, Text } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator} from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+const Tab = createBottomTabNavigator();
+function HomeScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed Screen</Text>
+    <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+     let iconName;
+     if (route.name === 'TabA') {
+        iconName = focused
+        ? 'ios-information-circle'
+        : 'ios-information-circle-outline';
+      } else if (route.name === 'TabB') {
+        iconName = focused
+        ? 'ios-list-box'
+        : 'ios-list';
+      }
+return <Ionicons name={iconName} size={size} color={color}     />;
+        },
+      })}
+      tabBarOptions={{
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+      }}
+    >
+        <Tab.Screen name="TabA" component={TabAScreen} />
+        <Tab.Screen name="TabB" component={TabBScreen} />
+    </Tab.Navigator>
+  );
+}
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>No New Notifications!</Text>
       <Button
-        title="Open drawer"
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-      />
-      <Button
-        title="Toggle drawer"
-        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+      onPress={() => navigation.goBack()}
+      title="Go back home"
       />
     </View>
   );
 }
-function Information({ navigation }) {
+const Stack = createStackNavigator();
+function TabAScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Infomation Screen</Text>
+    <Stack.Navigator>
+      <Stack.Screen name="TabA Home" component={TabADetailsScreen} />
+      <Stack.Screen name="TabA Details" component={Details} />
+    </Stack.Navigator>
+  );
+}
+function TabADetailsScreen({navigation}) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center',  alignItems: 'center' }}>
+      <Text>
+        Welcome to TabA page!
+      </Text>
+      <Button
+      onPress={() => navigation.navigate('TabA Details')}
+      title="Go to TabA Details"
+      />
     </View>
   );
 }
-
-function Notifications({ navigation }) {
+function Details() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications Screen</Text>
-      <Button
-        title="Open drawer"
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-      />
-      <Button
-        title="Toggle drawer"
-        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-      />
+    <View style={{ flex: 1, justifyContent: 'center',  alignItems: 'center' }}>
+      <Text>
+        TabA Details here!
+      </Text>
     </View>
   );
 }
-
-function CustomDrawerContent(props) {
+function TabBScreen() {
   return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="×閉じる"
-        onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
-      />
-    </DrawerContentScrollView>
+    <View>
+      <Text style={{textAlign: 'center', marginTop: 300}}>
+        Welcome to TabB page!
+      </Text>
+    </View>
   );
 }
-
 const Drawer = createDrawerNavigator();
-
-function MyDrawer() {
-  return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Feed" component={Feed} />
-      <Drawer.Screen name="Information" component={Information} />
-      <Drawer.Screen name="Notifications" component={Notifications} />
-    </Drawer.Navigator>
-  );
-}
-
 export default function App() {
   return (
     <NavigationContainer>
-      <MyDrawer />
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
-  );
+  )
 }
