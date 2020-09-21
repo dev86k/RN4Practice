@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer,DrawerActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator} from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 function HomeScreen() {
   return (
@@ -46,10 +46,19 @@ function NotificationsScreen({ navigation }) {
   );
 }
 const Stack = createStackNavigator();
-function TabAScreen() {
+function TabAScreen({navigation}) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="TabA Home" component={TabADetailsScreen} />
+      <Stack.Screen name="TabA Home" component={TabADetailsScreen}
+      options={{
+          headerTitle: "TabA",
+          headerRight: (props) => (
+                   <AntDesign name="bars" size={26} color="black" style={{ marginRight: 10 }}
+                     {...props}
+                       onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                   />
+                 ),
+        }} />
       <Stack.Screen name="TabA Details" component={Details} />
     </Stack.Navigator>
   );
