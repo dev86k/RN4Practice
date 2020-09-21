@@ -1,64 +1,80 @@
 import * as React from 'react';
-import { View, Text,Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, Button } from 'react-native';
+import { NavigationContainer, DrawerActions } from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
-function HomeScreen({navigation}) {
+function Feed({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Feed Screen</Text>
       <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
+        title="Open drawer"
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      />
+      <Button
+        title="Toggle drawer"
+        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+      />
+    </View>
+  );
+}
+function Information({ navigation }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Infomation Screen</Text>
+    </View>
+  );
+}
+
+function Notifications({ navigation }) {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Notifications Screen</Text>
+      <Button
+        title="Open drawer"
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      />
+      <Button
+        title="Toggle drawer"
+        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
       />
     </View>
   );
 }
 
-function DetailsScreen({route, navigation}) {
+function CustomDrawerContent(props) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Button
-        title="Go to moDal"
-        onPress={() => navigation.navigate('MyModal')}
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem
+        label="×閉じる"
+        onPress={() => props.navigation.dispatch(DrawerActions.closeDrawer())}
       />
-    </View>
+    </DrawerContentScrollView>
   );
 }
 
+const Drawer = createDrawerNavigator();
 
-function ModalScreen({ navigation }) {
+function MyDrawer() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
+    <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Feed" component={Feed} />
+      <Drawer.Screen name="Information" component={Information} />
+      <Drawer.Screen name="Notifications" component={Notifications} />
+    </Drawer.Navigator>
   );
 }
 
-
-const MainStack = createStackNavigator();
-const RootStack = createStackNavigator();
-
-function MainStackScreen() {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={HomeScreen} />
-      <MainStack.Screen name="Details" component={DetailsScreen} />
-    </MainStack.Navigator>
-  );
-}
-
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator mode="modal" headerMode="none">
-        <RootStack.Screen name="Main" component={MainStackScreen} />
-        <RootStack.Screen name="MyModal" component={ModalScreen} />
-      </RootStack.Navigator>
+      <MyDrawer />
     </NavigationContainer>
   );
 }
-
-export default App;
